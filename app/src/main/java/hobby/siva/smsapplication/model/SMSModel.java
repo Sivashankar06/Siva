@@ -37,7 +37,8 @@ public class SMSModel implements Contract.IModel {
         if(resolver != null) {
             Cursor cur = resolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, null, null,null);
             if(cur != null) {
-                while (cur.moveToNext()) {
+                cur.moveToLast();
+                while (cur.moveToPrevious()) {
                     SMS sms = new SMS(cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.ADDRESS)),
                                         cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.BODY)),
                                         cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.DATE)));

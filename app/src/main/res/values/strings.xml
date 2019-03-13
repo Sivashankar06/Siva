@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SMSApplication</string>
     <string name="reading_sms">Reading SMS&#8230;</string>
+    <string name="no_sms">No message found</string>
 </resources>

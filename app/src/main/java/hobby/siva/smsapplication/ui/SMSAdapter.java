@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import hobby.siva.smsapplication.R;
 import hobby.siva.smsapplication.pojo.SMS;
 
 /*
@@ -26,12 +27,17 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = mInflater.inflate(R.layout.sms_list_item_view, parent, false);
+        return new ItemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SMS listItem = mSms.get(position);
+        ((ItemViewHolder)holder).nameText.setText(listItem.getSender());
+        ((ItemViewHolder)holder).messageText.setText(listItem.getMessageBody());
+        ((ItemViewHolder)holder).timeStampText.setText(listItem.getTime()+"");
+        ((ItemViewHolder)holder).timeStampText.setVisibility(position % 3 == 0 ? View.VISIBLE : View.GONE); // TODO
     }
 
     @Override
@@ -39,23 +45,21 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return mSms.size();
     }
 
+    public void addAll(ArrayList<SMS> messages) {
+        mSms.addAll(messages);
+    }
+
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView timeStampText;
-        public TextView messageText;
         public TextView nameText;
+        public TextView messageText;
+        public TextView timeStampText;
 
         public ItemViewHolder(View view) {
             super(view);
-        }
-    }
-
-    private class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-        TextView headerText;
-
-        public HeaderViewHolder(View view) {
-            super(view);
+            nameText = view.findViewById(R.id.sender_name);
+            messageText = view.findViewById(R.id.message);
+            timeStampText = view.findViewById(R.id.time_stamp);
         }
     }
 }

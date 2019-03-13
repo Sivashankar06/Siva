@@ -4,7 +4,6 @@ import android.app.Activity;
 
 import java.util.ArrayList;
 
-import hobby.siva.smsapplication.model.SMSModel;
 import hobby.siva.smsapplication.pojo.SMS;
 
 /*
@@ -20,7 +19,13 @@ public interface Contract {
 
     interface IView {
 
-        void onNewMessage(SMSModel data);
+        void setInitialMessages(ArrayList<SMS> messages);
+
+        void showPlaceHolderWithMessage(String message);
+
+        void hidePlaceHolderWithMessage();
+
+        void onNewMessage(SMS message);
 
         void animateMessage(int index);
     }

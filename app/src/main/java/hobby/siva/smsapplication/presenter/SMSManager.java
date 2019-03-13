@@ -4,10 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.support.v4.app.ActivityCompat;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import hobby.siva.smsapplication.Contract;
+import hobby.siva.smsapplication.R;
+import hobby.siva.smsapplication.pojo.SMS;
 import hobby.siva.smsapplication.util.AlertUtil;
 import hobby.siva.smsapplication.util.PermissionChecker;
 
@@ -34,8 +38,15 @@ public class SMSManager implements Contract.IPresenter {
 
     @Override
     public void populateSMS() {
+        mView.showPlaceHolderWithMessage(this.mActContext.getString(R.string.reading_sms));
         if(PermissionChecker.isPermissionAvailable(this.mActContext, READ_SMS_PERMISSION)){
-            this.mModel.getSMS(this.mActContext);
+            ArrayList<SMS> smsList = this.mModel.getSMS(this.mActContext);
+            if(smsList.size() > 0){
+                mView.hidePlaceHolderWithMessage();
+                mView.setInitialMessages(smsList);
+            } else {
+                mView.showPlaceHolderWithMessage(this.mActContext.getString(R.string.no_sms));
+            }
         } else {
             if(PermissionChecker.isPermissionRationale(this.mActContext, READ_SMS_PERMISSION)) {
                 ActivityCompat.requestPermissions(this.mActContext, new String[] { READ_SMS_PERMISSION }, READ_SMS_PERMISSION_REQ_CODE);
