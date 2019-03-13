@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import hobby.siva.smsapplication.R;
 import hobby.siva.smsapplication.pojo.SMS;
+import hobby.siva.smsapplication.util.TimeValidator;
 
 /*
  * Copyright (c) 2019 Blue Jeans Network, Inc. All rights reserved.
@@ -20,6 +21,7 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<SMS> mSms = new ArrayList<>();
     private LayoutInflater mInflater;
+    private String mHeader;
 
     public SMSAdapter(Activity context) {
         this.mInflater = LayoutInflater.from(context);
@@ -36,8 +38,15 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         SMS listItem = mSms.get(position);
         ((ItemViewHolder)holder).nameText.setText(listItem.getSender());
         ((ItemViewHolder)holder).messageText.setText(listItem.getMessageBody());
-        ((ItemViewHolder)holder).timeStampText.setText(listItem.getTime()+"");
-        ((ItemViewHolder)holder).timeStampText.setVisibility(position % 3 == 0 ? View.VISIBLE : View.GONE); // TODO
+        ((ItemViewHolder)holder).timeStampText.setText(TimeValidator.getFormattedTime(listItem.getTime()));
+        String displayHeader = TimeValidator.getTimeStamp(listItem.getTime());
+        if(mHeader == null || !mHeader.equals(displayHeader)) {
+            ((ItemViewHolder)holder).headerText.setVisibility(View.VISIBLE);
+            ((ItemViewHolder)holder).headerText.setText(displayHeader);
+            mHeader = displayHeader;
+        } else {
+            ((ItemViewHolder)holder).headerText.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -51,12 +60,14 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        public TextView headerText;
         public TextView nameText;
         public TextView messageText;
         public TextView timeStampText;
 
         public ItemViewHolder(View view) {
             super(view);
+            headerText = view.findViewById(R.id.header);
             nameText = view.findViewById(R.id.sender_name);
             messageText = view.findViewById(R.id.message);
             timeStampText = view.findViewById(R.id.time_stamp);

@@ -71,17 +71,20 @@ public class MainActivity extends AppCompatActivity implements Contract.IView {
     @Override
     public void setInitialMessages(ArrayList<SMS> messages) {
         mSmsAdapter.addAll(messages);
+        mSmsListView.scrollToPosition(messages.size() - 1);
     }
 
     @Override
     public void showPlaceHolderWithMessage(String message) {
         mInfoTextView.setVisibility(View.VISIBLE);
+        mSmsListView.setVisibility(View.GONE);
         mInfoTextView.setText(message);
     }
 
     @Override
     public void hidePlaceHolderWithMessage() {
         mInfoTextView.setVisibility(View.GONE);
+        mSmsListView.setVisibility(View.VISIBLE);
     }
 
     @Override

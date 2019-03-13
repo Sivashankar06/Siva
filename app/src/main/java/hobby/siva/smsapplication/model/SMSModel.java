@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import hobby.siva.smsapplication.Contract;
 import hobby.siva.smsapplication.pojo.SMS;
+import hobby.siva.smsapplication.util.TimeValidator;
 
 /*
  * Copyright (c) 2019 Blue Jeans Network, Inc. All rights reserved.
@@ -39,10 +40,14 @@ public class SMSModel implements Contract.IModel {
             if(cur != null) {
                 cur.moveToLast();
                 while (cur.moveToPrevious()) {
-                    SMS sms = new SMS(cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.ADDRESS)),
-                                        cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.BODY)),
-                                        cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.DATE)));
-                    mSMSList.add(sms);
+                    String msgTime = cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.DATE));
+                    if(TimeValidator.isToday(msgTime)) {
+                        SMS sms = new SMS(cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.ADDRESS)),
+                                cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.BODY)), msgTime);
+                        mSMSList.add(sms);
+                    }else {
+                        break;
+                    }
                 }
                 cur.close();
             }
