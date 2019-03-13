@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import hobby.siva.smsapplication.model.SMSModel;
+import hobby.siva.smsapplication.pojo.SMS;
 
 /*
  * Copyright (c) 2019 Blue Jeans Network, Inc. All rights reserved.
@@ -17,7 +17,7 @@ import hobby.siva.smsapplication.model.SMSModel;
  */
 public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private ArrayList<SMSModel> mSmsModel = new ArrayList<>();
+    private ArrayList<SMS> mSms = new ArrayList<>();
     private LayoutInflater mInflater;
 
     public SMSAdapter(Activity context) {
@@ -31,12 +31,12 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        SMSModel listItem = mSmsModel.get(position);
+        SMS listItem = mSms.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return mSmsModel.size();
+        return mSms.size();
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {

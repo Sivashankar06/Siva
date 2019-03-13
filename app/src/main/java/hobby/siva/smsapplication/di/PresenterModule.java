@@ -1,5 +1,7 @@
 package hobby.siva.smsapplication.di;
 
+import android.app.Activity;
+
 import dagger.Module;
 import dagger.Provides;
 import hobby.siva.smsapplication.Contract;
@@ -13,9 +15,11 @@ import hobby.siva.smsapplication.presenter.SMSManager;
 @Module
 public class PresenterModule {
 
+    private Activity mActContext;
     private Contract.IView mViewInterface;
 
-    public PresenterModule(Contract.IView viewInterface) {
+    public PresenterModule(Activity actContext, Contract.IView viewInterface) {
+        this.mActContext = actContext;
         this.mViewInterface = viewInterface;
     }
 
@@ -26,6 +30,6 @@ public class PresenterModule {
 
     @Provides
     public Contract.IPresenter providePresenter(Contract.IView view, SMSModel model) {
-        return new SMSManager(view, model);
+        return new SMSManager(this.mActContext, view, model);
     }
 }

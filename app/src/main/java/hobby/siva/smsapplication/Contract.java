@@ -2,7 +2,10 @@ package hobby.siva.smsapplication;
 
 import android.app.Activity;
 
+import java.util.ArrayList;
+
 import hobby.siva.smsapplication.model.SMSModel;
+import hobby.siva.smsapplication.pojo.SMS;
 
 /*
  * Copyright (c) 2019 Blue Jeans Network, Inc. All rights reserved.
@@ -12,7 +15,7 @@ public interface Contract {
 
     interface IModel {
 
-        void readSMS(Activity actContext);
+        ArrayList<SMS> getSMS(Activity actContext);
     }
 
     interface IView {
@@ -23,6 +26,8 @@ public interface Contract {
     }
 
     interface IPresenter {
+
+        void populateSMS();
 
         void onActivityPause();
 
