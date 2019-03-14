@@ -1,10 +1,7 @@
 package hobby.siva.smsapplication.di;
 
-import android.content.Context;
-
 import dagger.Module;
 import dagger.Provides;
-import hobby.siva.smsapplication.SMSApplication;
 import hobby.siva.smsapplication.model.SMSModel;
 
 /*

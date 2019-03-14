@@ -5,10 +5,8 @@ import android.app.Application;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import hobby.siva.smsapplication.Contract;
 import hobby.siva.smsapplication.SMSApplication;
 import hobby.siva.smsapplication.model.SMSModel;
-import hobby.siva.smsapplication.ui.MainActivity;
 
 /*
  * Copyright (c) 2019 Blue Jeans Network, Inc. All rights reserved.

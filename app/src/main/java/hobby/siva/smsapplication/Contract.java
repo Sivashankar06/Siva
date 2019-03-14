@@ -1,6 +1,7 @@
 package hobby.siva.smsapplication;
 
 import android.app.Activity;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -14,30 +15,33 @@ public interface Contract {
 
     interface IModel {
 
-        ArrayList<SMS> getSMS(Activity actContext);
+        ArrayList<SMS> getInitialSMS(Activity actContext);
+
     }
 
     interface IView {
 
         void setInitialMessages(ArrayList<SMS> messages);
 
+        void onNewMessage(ArrayList<SMS> messages);
+
         void showPlaceHolderWithMessage(String message);
 
         void hidePlaceHolderWithMessage();
 
-        void onNewMessage(SMS message);
-
-        void animateMessage(int index);
     }
 
     interface IPresenter {
 
         void populateSMS();
 
+        void onPermissionRequestFinished();
+
         void onActivityPause();
 
         void onActivityResume();
 
-        void onNewIntent();
+        void onNewSMSReceived(SMS message);
+
     }
 }

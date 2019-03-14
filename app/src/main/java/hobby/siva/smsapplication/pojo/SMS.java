@@ -8,9 +8,9 @@ public class SMS {
 
     private String sender;
     private String messageBody;
-    private String time;
+    private long time;
 
-    public SMS(String sender, String messageBody, String time) {
+    public SMS(String sender, String messageBody, long time) {
         this.sender = sender;
         this.messageBody = messageBody;
         this.time = time;
@@ -25,6 +25,6 @@ public class SMS {
     }
 
     public long getTime() {
-        return Long.parseLong(time);
+        return time;
     }
 }

@@ -27,7 +27,7 @@ public class SMSModel implements Contract.IModel {
     public SMSModel(){}
 
     @Override
-    public ArrayList<SMS> getSMS(Activity actContext) {
+    public ArrayList<SMS> getInitialSMS(Activity actContext) {
         mSMSList.clear();
         String[] projection = new String[]{
                 Telephony.Sms.Inbox.DATE,
@@ -38,14 +38,13 @@ public class SMSModel implements Contract.IModel {
         if(resolver != null) {
             Cursor cur = resolver.query(Telephony.Sms.Inbox.CONTENT_URI, projection, null, null,null);
             if(cur != null) {
-                cur.moveToLast();
-                while (cur.moveToPrevious()) {
+                while (cur.moveToNext()) {
                     String msgTime = cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.DATE));
                     if(TimeValidator.isToday(msgTime)) {
                         SMS sms = new SMS(cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.ADDRESS)),
-                                cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.BODY)), msgTime);
+                                cur.getString(cur.getColumnIndex(Telephony.Sms.Inbox.BODY)), Long.parseLong(msgTime));
                         mSMSList.add(sms);
-                    }else {
+                    } else {
                         break;
                     }
                 }

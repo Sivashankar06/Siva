@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         } else {
             ((ItemViewHolder)holder).headerText.setVisibility(View.GONE);
         }
+        setAnimation(holder.itemView);
     }
 
     @Override
@@ -56,6 +58,12 @@ public class SMSAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void addAll(ArrayList<SMS> messages) {
         mSms.addAll(messages);
+    }
+
+    private void setAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(1000);
+        view.startAnimation(anim);
     }
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
